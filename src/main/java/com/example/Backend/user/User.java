@@ -2,7 +2,6 @@ package com.example.Backend.user;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Generated;
 
 import java.util.UUID;
 

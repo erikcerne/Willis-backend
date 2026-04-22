@@ -16,7 +16,7 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID InventoryId;
     UUID ProductID;
-    int quantity;
-    LocalDateTime expiryDate;
-    LocalDateTime produceDate;
+    int Quantity;
+    LocalDateTime ExpiryDate;
+    LocalDateTime ProduceDate;
 }

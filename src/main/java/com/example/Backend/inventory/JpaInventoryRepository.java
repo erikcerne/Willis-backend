@@ -1,4 +1,4 @@
 package com.example.Backend.inventory;
 
-public interface JpaInventoryRepository {
+public interface JpaInventoryRepository  {
 }
