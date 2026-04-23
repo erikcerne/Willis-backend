@@ -1,0 +1,52 @@
+name: Build and deploy Backend to GCP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_URL: ${{ vars.GC_REGION }}-docker.pkg.dev/${{ vars.GC_PROJECT_ID }}/${{ vars.GC_REPO_NAME }}/${{ vars.GC_SERVICE_NAME }}:${{ github.sha }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - id: "auth"
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: "${{ secrets.GCP_SA_KEY }}"
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure docker
+        run: gcloud auth configure-docker ${{ vars.GC_REGION }}-docker.pkg.dev
+
+      # Bygg .jar filen och Docker-imagen
+      - name: Docker Build
+        run: docker build -t ${{ env.IMAGE_URL }} .
+
+      - name: Docker Push
+        run: docker push ${{ env.IMAGE_URL }}
+
+      - name: Update Cloud Run service
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          region: ${{ vars.GC_REGION }}
+          service: ${{ vars.GC_SERVICE_NAME }}
+          image: ${{ env.IMAGE_URL }}
+          # HÄR kopplar vi ihop GitHub Secrets med din application.properties
+          env_vars: |
+            SPRING_DATASOURCE_URL=${{ secrets.DB_URL }}
+            SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USER }}
+            SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASS }}
