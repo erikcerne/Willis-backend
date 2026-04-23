@@ -1,4 +1,8 @@
 package com.example.Backend.inventory;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface JpaInventoryRepository  {
+
+import java.util.UUID;
+
+public interface JpaInventoryRepository extends JpaRepository<Inventory, UUID>  {
 }

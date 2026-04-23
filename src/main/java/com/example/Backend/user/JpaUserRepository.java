@@ -1,4 +1,8 @@
 package com.example.Backend.user;
 
-public interface JpaUserRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.UUID;
+
+public interface JpaUserRepository extends JpaRepository<Users, UUID> {
 }
