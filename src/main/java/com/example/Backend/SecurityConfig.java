@@ -12,10 +12,9 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable()) // Inaktivera CSRF för API-tester
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll() // Öppna dessa
-                        .anyRequest().authenticated() // Kräv inlogg för resten sen
-                ).formLogin(form -> form.permitAll()); // Detta är den som skapar din /login sida
+        http.csrf(csrf -> csrf.disable()) // Inaktivera CSRF för att kunna posta data
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll() // Detta öppnar ALLA urler (inga fler redirects till /login)
+                );
 
         return http.build();
     }

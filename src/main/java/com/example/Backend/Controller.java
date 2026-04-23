@@ -1,9 +1,18 @@
 package com.example.Backend;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@org.springframework.stereotype.Controller
+@RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class Controller {
+
+    @GetMapping("/id")
+    public String getString() {
+        return "sadfghasdfghjklölkjhgfdsdfghjklkjhgfdsdfghj";
+    }
 
 }
