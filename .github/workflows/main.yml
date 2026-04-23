@@ -9,8 +9,10 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      IMAGE_URL: ${{ vars.GC_REGION }}-docker.pkg.dev/${{ vars.GC_PROJECT_ID }}/${{ vars.GC_REPO_NAME }}/${{ vars.GC_SERVICE_NAME }}:${{ github.sha }}
-
+      env_vars: |
+        SPRING_DATASOURCE_URL=${{ secrets.DB_URL }}
+        SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USER }}
+        SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASS }}
     steps:
       - uses: actions/checkout@v4
 
