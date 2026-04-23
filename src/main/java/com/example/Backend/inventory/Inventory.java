@@ -1,10 +1,11 @@
 package com.example.Backend.inventory;
 
 import com.example.Backend.products.Product;
-import com.example.Backend.user.User;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.example.Backend.user.Users;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -12,6 +13,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "inventory")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Inventory {
 
     @Id
@@ -19,12 +22,13 @@ public class Inventory {
     private UUID inventoryId;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "productID")
-    private Product productID;
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "UserID")
-    private User user;
+    @JoinColumn(name = "Users_id")
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    private Users users;
 
     private int quantity;
     private LocalDateTime expiryDate;

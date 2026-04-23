@@ -2,28 +2,24 @@ package com.example.Backend.user;
 
 import com.example.Backend.inventory.Inventory;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "user")
-public class User {
+@Table(name = "users")
+@NoArgsConstructor
+@AllArgsConstructor
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID userID;
     private String name;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Inventory> inventories;
 
-    public User() {
-    }
-
-    public User(UUID userID, String name, List<Inventory> inventories) {
-        this.userID = userID;
-        this.name = name;
-        this.inventories = inventories;
-    }
 }
