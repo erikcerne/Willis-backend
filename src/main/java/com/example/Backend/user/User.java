@@ -9,21 +9,21 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "User")
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    UUID UserID;
-    String Name;
+    private UUID userID;
+    private String name;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Inventory> inventories;
 
-    public User(){
+    public User() {
     }
 
     public User(UUID userID, String name, List<Inventory> inventories) {
-        UserID = userID;
-        Name = name;
+        this.userID = userID;
+        this.name = name;
         this.inventories = inventories;
     }
 }

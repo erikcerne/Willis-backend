@@ -8,12 +8,22 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "Product")
+@Table(name = "product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    UUID ProductID;
-    String Name;
-    String Category;
-    URL Pic;
+    private UUID productID;
+    private String name;
+    private String category;
+    private URL pic;
+
+    public Product() {
+    }
+
+    public Product(UUID productID, String name, String category, URL pic) {
+        this.productID = productID;
+        this.name = name;
+        this.category = category;
+        this.pic = pic;
+    }
 }
