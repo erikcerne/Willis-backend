@@ -32,7 +32,6 @@ jobs:
       - name: Configure docker
         run: gcloud auth configure-docker ${{ vars.GC_REGION }}-docker.pkg.dev
 
-      # Bygg .jar filen och Docker-imagen
       - name: Docker Build
         run: docker build -t ${{ env.IMAGE_URL }} .
 
@@ -45,7 +44,6 @@ jobs:
           region: ${{ vars.GC_REGION }}
           service: ${{ vars.GC_SERVICE_NAME }}
           image: ${{ env.IMAGE_URL }}
-          # HÄR kopplar vi ihop GitHub Secrets med din application.properties
           env_vars: |
             SPRING_DATASOURCE_URL=${{ secrets.DB_URL }}
             SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USER }}
