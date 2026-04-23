@@ -1,7 +1,7 @@
 package com.example.Backend.inventory;
 
 import com.example.Backend.products.Product;
-import com.example.Backend.user.Users;
+import com.example.Backend.user.User; // Notera: User istället för Users
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,9 +26,9 @@ public class Inventory {
     private Product product;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "Users_id")
+    @JoinColumn(name = "user_id")
     @com.fasterxml.jackson.annotation.JsonIgnore
-    private Users users;
+    private User user;
 
     private int quantity;
     private LocalDateTime expiryDate;

@@ -16,9 +16,9 @@ import java.util.UUID;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID productID;
+    private UUID productId;
+
     private String name;
     private String category;
     private URL pic;
-
 }

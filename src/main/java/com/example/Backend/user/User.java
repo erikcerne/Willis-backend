@@ -14,12 +14,13 @@ import java.util.UUID;
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Users {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID userID;
-    private String name;
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-    private List<Inventory> inventories;
+    private UUID userId;
 
+    private String name;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Inventory> inventories;
 }

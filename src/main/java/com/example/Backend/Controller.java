@@ -1,7 +1,10 @@
 package com.example.Backend;
+
 import com.example.Backend.dtos.ReceiveInventoryDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -15,13 +18,10 @@ public class Controller {
         this.inventoryService = inventoryService;
     }
 
-
     @PostMapping()
-    public ResponseEntity<ReceiveInventoryDto> addCartToInventory(@RequestBody ReceiveInventoryDto dto){
+    public ResponseEntity<Void> addCartToInventory(@RequestBody List<ReceiveInventoryDto> dto) {
         inventoryService.addCart(dto);
         return null;
     }
-
-
 
 }
