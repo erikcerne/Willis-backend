@@ -8,15 +8,13 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 public class Controller {
 
-    UsersService usersService;
-    InventoryService inventoryService;
-    ProductService productService;
 
-    public Controller(UsersService usersService, InventoryService inventoryService, ProductService productService) {
-        this.usersService = usersService;
+    InventoryService inventoryService;
+
+    public Controller(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
-        this.productService = productService;
     }
+
 
     @PostMapping()
     public ResponseEntity<ReceiveInventoryDto> addCartToInventory(@RequestBody ReceiveInventoryDto dto){
