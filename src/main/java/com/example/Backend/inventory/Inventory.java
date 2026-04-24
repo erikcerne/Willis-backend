@@ -19,6 +19,7 @@ public class Inventory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "inventory_id")
     private UUID inventoryId;
 
     @ManyToOne(optional = false)
