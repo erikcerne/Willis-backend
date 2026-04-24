@@ -27,6 +27,7 @@ public class InventoryService {
         this.userRepo = userRepo;
         this.productRepo = productRepo;
     }
+
     @Transactional
     public void addCart(List<ReceiveInventoryDto> dto) {
         List<Inventory> data = new ArrayList<>(dto.stream().map(i -> new Inventory(
@@ -58,12 +59,10 @@ public class InventoryService {
                     wasFound = true;
                     break;
                 }
-
             }
             if (!wasFound) {
                 newData.add(inventory);
             }
-
         }
         return newData;
     }
@@ -80,13 +79,16 @@ public class InventoryService {
         inventoryRepo.save(inventory);
     }
 
-
     public User findUserByID(UUID id) {
         return userRepo.getUserById(id);
     }
 
     public Product findProductById(UUID id) {
         return productRepo.getProductById(id);
+    }
+
+    public List<Inventory> findAll() {
+        return inventoryRepo.findAll();
     }
 
 }

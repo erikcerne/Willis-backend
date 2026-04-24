@@ -1,7 +1,6 @@
 package com.example.Backend.inventory;
 
 import com.example.Backend.dtos.ReceiveInventoryDto;
-import com.example.Backend.user.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,6 +29,10 @@ public class InventoryRepository {
 
     public void saveAll(List<Inventory> inventories){
         repo.saveAll(inventories);
+    }
+
+    public List<Inventory> findAll(){
+        return repo.findAll();
     }
 
 

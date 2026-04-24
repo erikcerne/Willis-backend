@@ -1,6 +1,7 @@
 package com.example.Backend;
 
 import com.example.Backend.dtos.ReceiveInventoryDto;
+import com.example.Backend.inventory.Inventory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,11 @@ public class Controller {
     public ResponseEntity<Void> addCartToInventory(@RequestBody List<ReceiveInventoryDto> dto) {
         inventoryService.addCart(dto);
         return null;
+    }
+    @GetMapping("/all")
+    public ResponseEntity<List<Inventory>> getAll(){
+        List<Inventory> inventories = inventoryService.findAll();
+        return ResponseEntity.ok(inventories);
     }
 
 }
