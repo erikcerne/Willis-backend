@@ -14,8 +14,6 @@ import java.util.UUID;
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
 public class Controller {
-
-
     InventoryService inventoryService;
 
     public Controller(InventoryService inventoryService) {
@@ -34,13 +32,13 @@ public class Controller {
         return ResponseEntity.ok(inventoryDtos);
     }
 
-    @DeleteMapping("/delete/{userId}")
+    @DeleteMapping("/deleteAll/{userId}")
     public ResponseEntity<Void> deleteAllGoneBadItems(@PathVariable UUID userId){
         inventoryService.deleteGoneBadItems(userId);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/delite/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable UUID id, @RequestBody QuantityRequest request){
         inventoryService.deleteConsumedItems(id, request.quantity());
         return ResponseEntity.noContent().build();
