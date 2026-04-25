@@ -115,7 +115,7 @@ public class InventoryService {
     private InventoryDto mapToInventoryDto(List<InventoryListDto> listDto, Inventory inventory) {
         return new InventoryDto(
                 inventory.getProduct().getName(),
-                inventory.getProduct().getName(),
+                inventory.getProduct().getCategory(),
                 listDto,
                 inventory.getProduct().getPic());
     }
