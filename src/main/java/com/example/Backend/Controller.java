@@ -1,6 +1,7 @@
 package com.example.Backend;
 
 import com.example.Backend.dtos.InventoryDto;
+import com.example.Backend.dtos.QuantityRequest;
 import com.example.Backend.dtos.ReceiveInventoryDto;
 import com.example.Backend.inventory.Inventory;
 import org.springframework.http.ResponseEntity;
@@ -26,11 +27,6 @@ public class Controller {
         inventoryService.addCart(dto);
         return null;
     }
-    @GetMapping("/all")
-    public ResponseEntity<List<Inventory>> getAll(){
-        List<Inventory> inventories = inventoryService.findAll();
-        return ResponseEntity.ok(inventories);
-    }
 
     @GetMapping("/all/{id}")
     public ResponseEntity<List<InventoryDto>> getAllForUserId(@PathVariable UUID id){
@@ -38,9 +34,15 @@ public class Controller {
         return ResponseEntity.ok(inventoryDtos);
     }
 
-    @DeleteMapping("/delete/id")
-    public ResponseEntity<Void> deleteAllGoneBadItems(UUID userId){
+    @DeleteMapping("/delete/{userId}")
+    public ResponseEntity<Void> deleteAllGoneBadItems(@PathVariable UUID userId){
         inventoryService.deleteGoneBadItems(userId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/delite/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable UUID id, @RequestBody QuantityRequest request){
+        inventoryService.deleteConsumedItems(id, request.quantity());
         return ResponseEntity.noContent().build();
     }
 

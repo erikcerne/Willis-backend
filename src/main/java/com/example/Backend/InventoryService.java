@@ -34,7 +34,9 @@ public class InventoryService {
 
     @Transactional
     public void addCart(List<ReceiveInventoryDto> dto) {
-        List<Inventory> data = new ArrayList<>(dto.stream().map(i -> new Inventory(null, findProductById(i.productId()), findUserByID(i.UserId()), i.Quantity(), i.expiryDate(), i.produceDate())).toList());
+        List<Inventory> data = new ArrayList<>(dto.stream().
+                map(i -> new Inventory(null, findProductById(i.productId()),
+                        findUserByID(i.UserId()), i.Quantity(), i.expiryDate(), i.produceDate())).toList());
 
         List<Inventory> cleanData = checkIfExistingInDb(data);
         inventoryRepo.saveAll(cleanData);
@@ -49,10 +51,10 @@ public class InventoryService {
         List<Inventory> newData = new ArrayList<>();
 
         for (Inventory inventory : data) {
-            Boolean wasFound = false;
+            boolean wasFound = false;
             for (Inventory existingInventory : existingData) {
                 if (equals(inventory, existingInventory)) {
-                    updateQuantity(existingInventory, inventory.getQuantity());
+                    updateQuantityUpp(existingInventory, inventory.getQuantity());
                     wasFound = true;
                     break;
                 }
@@ -70,7 +72,7 @@ public class InventoryService {
                 a.getProduct().getProductId().equals(b.getProduct().getProductId());
     }
 
-    protected void updateQuantity(Inventory inventory, int amount) {
+    protected void updateQuantityUpp(Inventory inventory, int amount) {
         int newAmount = inventory.getQuantity() + amount;
         inventory.setQuantity(newAmount);
         inventoryRepo.save(inventory);
@@ -84,16 +86,12 @@ public class InventoryService {
         return productRepo.getProductById(id);
     }
 
-    public List<Inventory> findAll() {
-        return inventoryRepo.findAll();
-    }
-
     //get
 
     public List<InventoryDto> findAllForUserId(UUID id) {
 
         List<Inventory> inventoriesForUser = inventoryRepo.getALlInventoryByUserId(id);
-        List<InventoryDto> inventoryDtos = new ArrayList<>();
+        List<InventoryDto> inventoryDos = new ArrayList<>();
 
         while (!inventoriesForUser.isEmpty()) {
             Inventory newInventory = inventoriesForUser.remove(0);
@@ -108,17 +106,17 @@ public class InventoryService {
             combinedSpecs.add(mapToInventoryListDto(newInventory));
             combinedSpecs.addAll(tempInventory.stream().map(this::mapToInventoryListDto).toList());
             InventoryDto tempDto = mapToInventoryDto(combinedSpecs, newInventory);
-            inventoryDtos.add(tempDto);
+            inventoryDos.add(tempDto);
         }
-        return inventoryDtos;
+        return inventoryDos;
 
     }
 
-    private InventoryDto mapToInventoryDto(List<InventoryListDto> listDtos, Inventory inventory) {
+    private InventoryDto mapToInventoryDto(List<InventoryListDto> listDto, Inventory inventory) {
         return new InventoryDto(
                 inventory.getProduct().getName(),
                 inventory.getProduct().getName(),
-                listDtos,
+                listDto,
                 inventory.getProduct().getPic());
     }
 
@@ -164,5 +162,22 @@ public class InventoryService {
         idsToDelete.forEach(uuid -> inventoryRepo.deleteById(uuid));
     }
 
+    //Consumed
+    @Transactional
+    public void deleteConsumedItems(UUID id, int quantity) {
+        Inventory inventory = inventoryRepo.findById(id);
+        int inventoryQuantity = inventory.getQuantity();
+        if (inventoryQuantity <= quantity) {
+            inventoryRepo.deleteById(id);
+        } else {
+            updateQuantityDown(inventory, quantity);
+        }
+    }
+
+    protected void updateQuantityDown(Inventory inventory, int amount) {
+        int newAmount = inventory.getQuantity() - amount;
+        inventory.setQuantity(newAmount);
+        inventoryRepo.save(inventory);
+    }
 
 }

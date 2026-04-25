@@ -4,6 +4,7 @@ import com.example.Backend.dtos.ReceiveInventoryDto;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Repository
@@ -28,12 +29,12 @@ public class InventoryRepository {
         repo.saveAll(inventories);
     }
 
-    public List<Inventory> findAll(){
-        return repo.findAll();
-    }
-
     public void deleteById(UUID id){
         repo.deleteById(id);
+    }
+
+    public Inventory findById(UUID id){
+       return repo.findById(id).orElseThrow(()-> new NoSuchElementException("du har inte den i dig inventory"));
     }
 
 }
