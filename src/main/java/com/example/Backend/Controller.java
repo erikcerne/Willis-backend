@@ -39,9 +39,15 @@ public class Controller {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable UUID id, @RequestBody QuantityRequest request){
-        inventoryService.deleteConsumedItems(id, request.quantity());
+    public ResponseEntity<Void> deleteInventoryById(@PathVariable UUID id){
+        inventoryService.deleteInventory(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Inventory> updateQuantityById(@PathVariable UUID id, @RequestBody QuantityRequest request){
+        Inventory inventory = inventoryService.updateQuantity(id, request.quantity());
+        return ResponseEntity.accepted().body(inventory);
     }
 
 }

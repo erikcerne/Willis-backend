@@ -1,6 +1,5 @@
 package com.example.Backend.inventory;
 
-import com.example.Backend.dtos.ReceiveInventoryDto;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

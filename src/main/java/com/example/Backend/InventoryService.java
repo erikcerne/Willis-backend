@@ -164,20 +164,17 @@ public class InventoryService {
 
     //Consumed
     @Transactional
-    public void deleteConsumedItems(UUID id, int quantity) {
+    public Inventory updateQuantity(UUID id, int quantity) {
         Inventory inventory = inventoryRepo.findById(id);
-        int inventoryQuantity = inventory.getQuantity();
-        if (inventoryQuantity <= quantity) {
-            inventoryRepo.deleteById(id);
-        } else {
-            updateQuantityDown(inventory, quantity);
-        }
-    }
-
-    protected void updateQuantityDown(Inventory inventory, int amount) {
-        int newAmount = inventory.getQuantity() - amount;
+        int newAmount = inventory.getQuantity() - quantity;
         inventory.setQuantity(newAmount);
         inventoryRepo.save(inventory);
+        return inventory;
     }
+    public void deleteInventory(UUID id){
+        inventoryRepo.deleteById(id);
+    }
+
+
 
 }
