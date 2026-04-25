@@ -15,9 +15,6 @@ public class InventoryRepository {
         this.repo = repo;
     }
 
-    public ReceiveInventoryDto add(ReceiveInventoryDto dto){
-        return null;
-    }
 
     public List<Inventory> getALlInventoryByUserId(UUID id){
         return repo.findAllByUser_UserId(id);
