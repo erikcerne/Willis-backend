@@ -32,5 +32,8 @@ public class InventoryRepository {
         return repo.findAll();
     }
 
+    public void deleteById(UUID id){
+        repo.deleteById(id);
+    }
 
 }

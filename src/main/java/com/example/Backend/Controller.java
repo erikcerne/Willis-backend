@@ -38,4 +38,10 @@ public class Controller {
         return ResponseEntity.ok(inventoryDtos);
     }
 
+    @DeleteMapping("/delete/id")
+    public ResponseEntity<Void> deleteAllGoneBadItems(UUID userId){
+        inventoryService.deleteGoneBadItems(userId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

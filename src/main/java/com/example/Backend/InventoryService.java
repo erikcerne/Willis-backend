@@ -65,7 +65,9 @@ public class InventoryService {
     }
 
     private Boolean equals(Inventory a, Inventory b) {
-        return Objects.equals(a.getExpiryDate(), b.getExpiryDate()) && Objects.equals(a.getProduceDate(), b.getProduceDate()) && a.getProduct().getProductId().equals(b.getProduct().getProductId());
+        return Objects.equals(a.getExpiryDate(), b.getExpiryDate()) &&
+                Objects.equals(a.getProduceDate(), b.getProduceDate()) &&
+                a.getProduct().getProductId().equals(b.getProduct().getProductId());
     }
 
     protected void updateQuantity(Inventory inventory, int amount) {
@@ -142,7 +144,7 @@ public class InventoryService {
         return Math.min(Math.max(ratio, 0.0), 1.0);
     }
 
-    public int calculateDaysLeft(LocalDateTime expiryDate) {
+    private int calculateDaysLeft(LocalDateTime expiryDate) {
         if (expiryDate == null) return 0;
         LocalDateTime now = LocalDateTime.now();
         if (now.isAfter(expiryDate)) {
@@ -151,5 +153,16 @@ public class InventoryService {
         long days = ChronoUnit.DAYS.between(now, expiryDate);
         return (int) Math.max(0, days);
     }
+
+    //delete
+    public void deleteGoneBadItems(UUID userId) {
+        List<Inventory> inventoriesForUser = inventoryRepo.getALlInventoryByUserId(userId);
+        List<UUID> idsToDelete = inventoriesForUser.stream()
+                .filter(inventory -> calculateDaysLeft(inventory.getExpiryDate()) == 0)
+                .map(Inventory::getInventoryId)
+                .toList();
+        idsToDelete.forEach(uuid -> inventoryRepo.deleteById(uuid));
+    }
+
 
 }
