@@ -175,6 +175,4 @@ public class InventoryService {
         inventoryRepo.deleteById(id);
     }
 
-
-
 }
