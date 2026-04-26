@@ -7,6 +7,8 @@ import com.example.Backend.inventory.Inventory;
 import com.example.Backend.inventory.InventoryRepository;
 import com.example.Backend.products.Product;
 import com.example.Backend.products.ProductRepository;
+import com.example.Backend.shoppingList.ShoppingList;
+import com.example.Backend.shoppingList.ShoppingListRepository;
 import com.example.Backend.user.UserRepository;
 import com.example.Backend.user.User;
 import jakarta.transaction.Transactional;
@@ -24,10 +26,13 @@ public class InventoryService {
     UserRepository userRepo;
     ProductRepository productRepo;
 
-    public InventoryService(InventoryRepository inventoryRepo, UserRepository userRepo, ProductRepository productRepo) {
+    ShoppingListRepository shoppingListRepo;
+
+    public InventoryService(InventoryRepository inventoryRepo, UserRepository userRepo, ProductRepository productRepo, ShoppingListRepository shoppingListRepo) {
         this.inventoryRepo = inventoryRepo;
         this.userRepo = userRepo;
         this.productRepo = productRepo;
+        this.shoppingListRepo = shoppingListRepo;
     }
 
     //add
@@ -83,7 +88,7 @@ public class InventoryService {
     }
 
     public Product findProductById(UUID id) {
-        return productRepo.getProductById(id);
+        return productRepo.findById(id);
     }
 
     //get
@@ -171,8 +176,21 @@ public class InventoryService {
         inventoryRepo.save(inventory);
         return inventory;
     }
-    public void deleteInventory(UUID id){
+
+    public void deleteInventory(UUID id) {
         inventoryRepo.deleteById(id);
     }
 
+    //ShoppingList
+
+    public void saveShoppingList(UUID productId, String userId) {
+        User user = userRepo.findById(userId);
+        Product product = productRepo.findById(productId);
+        ShoppingList shoppingList = new ShoppingList(null, product, user);
+        shoppingListRepo.save(shoppingList);
+    }
+
+    public void deleteShoppingList(UUID id) {
+        shoppingListRepo.deleteById(id);
+    }
 }

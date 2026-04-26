@@ -69,5 +69,17 @@ public class Controller {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/shopping")
+    public ResponseEntity<Void> syncCartToInventory(UUID productId, String userId) {
+        inventoryService.saveShoppingList(productId, userId);
+        return null;
+    }
+
+    @DeleteMapping("/shopping/{id}")
+    public ResponseEntity<Void> deleteShoppingList(@PathVariable UUID id) {
+        inventoryService.deleteShoppingList(id);
+        return ResponseEntity.noContent().build();
+    }
+
 
 }

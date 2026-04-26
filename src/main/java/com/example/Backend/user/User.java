@@ -1,13 +1,13 @@
 package com.example.Backend.user;
 
 import com.example.Backend.inventory.Inventory;
+import com.example.Backend.shoppingList.ShoppingList;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Data
@@ -23,5 +23,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Inventory> inventories;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<ShoppingList> shoppingLists;
+
 
 }
