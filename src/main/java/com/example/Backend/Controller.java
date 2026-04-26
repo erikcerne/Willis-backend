@@ -30,13 +30,11 @@ public class Controller {
 
     @PostMapping("/users/register")
     public ResponseEntity<User> registerUser(@AuthenticationPrincipal Jwt jwt) {
-        System.out.println("DEBUG - Alla claims: " + jwt.getClaims());
         String auth0Id = jwt.getSubject();
         String email = jwt.getClaimAsString("https://willis-api/email");
         if (email == null) {
             email = jwt.getClaimAsString("email");
         }
-        System.out.println("DEBUG - Hittad email: " + email);
         return ResponseEntity.ok(userService.registerIfNew(auth0Id, email));
     }
 
@@ -47,32 +45,30 @@ public class Controller {
     }
 
     @GetMapping("/inventory")
-    public ResponseEntity<List<InventoryDto>> getUserInventory(String id){
-        List<InventoryDto> inventoryDto = inventoryService.findAllForUserId(id);
+    public ResponseEntity<List<InventoryDto>> getUserInventory(@AuthenticationPrincipal Jwt jwt) {
+        String auth0Id = jwt.getSubject();
+        List<InventoryDto> inventoryDto = inventoryService.findAllForUserId(auth0Id);
         return ResponseEntity.ok(inventoryDto);
     }
 
     @PutMapping("/inventory/{id}")
-    public ResponseEntity<Inventory> updateItemQuantity(@PathVariable UUID id, @RequestBody QuantityRequest request){
+    public ResponseEntity<Inventory> updateItemQuantity(@PathVariable UUID id, @RequestBody QuantityRequest request) {
         Inventory inventory = inventoryService.updateQuantity(id, request.quantity());
         return ResponseEntity.accepted().body(inventory);
     }
 
 
     @DeleteMapping("/inventory/{id}")
-    public ResponseEntity<Void> deleteInventoryItem(@PathVariable UUID id){
+    public ResponseEntity<Void> deleteInventoryItem(@PathVariable UUID id) {
         inventoryService.deleteInventory(id);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/inventory/expired")
-    public ResponseEntity<Void> clearExpiredItems(String userId){
+    public ResponseEntity<Void> clearExpiredItems(String userId) {
         inventoryService.deleteGoneBadItems(userId);
         return ResponseEntity.noContent().build();
     }
-
-
-
 
 
 }

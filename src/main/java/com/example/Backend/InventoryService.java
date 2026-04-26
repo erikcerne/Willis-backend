@@ -36,7 +36,7 @@ public class InventoryService {
     public void addCart(List<ReceiveInventoryDto> dto) {
         List<Inventory> data = new ArrayList<>(dto.stream().
                 map(i -> new Inventory(null, findProductById(i.productId()),
-                        findUserByID(i.UserId()), i.Quantity(), i.expiryDate(), i.produceDate())).toList());
+                        findUserByID(i.userId()), i.quantity(), i.expiryDate(), i.produceDate())).toList());
 
         List<Inventory> cleanData = checkIfExistingInDb(data);
         inventoryRepo.saveAll(cleanData);

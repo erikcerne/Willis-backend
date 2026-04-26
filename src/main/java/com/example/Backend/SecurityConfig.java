@@ -23,11 +23,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        // Tillåt anrop till /api/register för inloggade användare
-                        .requestMatchers("/api/register").authenticated()
-                        // Tillåt övriga api-anrop för inloggade användare
-                        .requestMatchers("/api/**").authenticated()
-                        // Tillåt allt annat (t.ex. Swagger)
+                        // Matcha controllerns exakta sökväg
+                        .requestMatchers("/api/users/register").authenticated()
+                        .requestMatchers("/api/inventory/**").authenticated()
+                        .requestMatchers("/api/inventory").authenticated()
                         .anyRequest().permitAll()
                 )
                 .oauth2ResourceServer(oauth -> oauth
