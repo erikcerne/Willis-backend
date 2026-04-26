@@ -15,20 +15,18 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShoppingList {
-        @Id
-        @GeneratedValue(strategy = GenerationType.UUID)
-        @Column(name = "shoppingList_id")
-        private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "shoppingList_id")
+    private UUID id;
 
-        @ManyToOne(optional = false)
-        @JoinColumn(name = "product_id")
-        private Product product;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "product_id")
+    private Product product;
 
-        @ManyToOne(optional = false)
-        @JoinColumn(name = "user_id")
-        @com.fasterxml.jackson.annotation.JsonIgnore
-        private User user;
-
-
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id")
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    private User user;
 
 }

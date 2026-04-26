@@ -16,7 +16,7 @@ public class InventoryRepository {
     }
 
 
-    public List<Inventory> getALlInventoryByUserId(String id){
+    public List<Inventory> getALlInventoryByUserId(String id) {
         return repo.findAllByUser_UserId(id);
     }
 
@@ -24,16 +24,16 @@ public class InventoryRepository {
         repo.save(inventory);
     }
 
-    public void saveAll(List<Inventory> inventories){
+    public void saveAll(List<Inventory> inventories) {
         repo.saveAll(inventories);
     }
 
-    public void deleteById(UUID id){
+    public void deleteById(UUID id) {
         repo.deleteById(id);
     }
 
-    public Inventory findById(UUID id){
-       return repo.findById(id).orElseThrow(()-> new NoSuchElementException("du har inte den i dig inventory"));
+    public Inventory findById(UUID id) {
+        return repo.findById(id).orElseThrow(() -> new NoSuchElementException("du har inte den i dig inventory"));
     }
 
 }

@@ -14,9 +14,11 @@ public class UserRepository {
     public UserRepository(JpaUserRepository jpa) {
         this.jpa = jpa;
     }
-    public User findById(String id){
-        return jpa.findById(id).orElseThrow(()-> new NoSuchElementException("användare hittades inte"));
+
+    public User findById(String id) {
+        return jpa.findById(id).orElseThrow(() -> new NoSuchElementException("användare hittades inte"));
     }
+
     public Optional<User> findByIdOrNot(String id) {
         return jpa.findById(id);
     }

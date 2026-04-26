@@ -12,10 +12,12 @@ public class ShoppingListRepository {
         this.jpa = jpa;
     }
 
-    public void save(ShoppingList shoppingList){
+    public void save(ShoppingList shoppingList) {
         jpa.save(shoppingList);
     }
-    public void deleteById(UUID id){
+
+    public void deleteById(UUID id) {
         jpa.deleteById(id);
     }
+
 }

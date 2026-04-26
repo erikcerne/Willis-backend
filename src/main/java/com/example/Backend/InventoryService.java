@@ -128,7 +128,11 @@ public class InventoryService {
     private InventoryListDto mapToInventoryListDto(Inventory inventory) {
         double expiryProgress = calculateExpiryProgress(inventory.getProduceDate(), inventory.getExpiryDate());
         int daysLeft = calculateDaysLeft(inventory.getExpiryDate());
-        return new InventoryListDto(inventory.getExpiryDate(), expiryProgress, inventory.getQuantity(), daysLeft, inventory.getInventoryId());
+        return new InventoryListDto(inventory.getExpiryDate(),
+                expiryProgress,
+                inventory.getQuantity(),
+                daysLeft,
+                inventory.getInventoryId());
     }
 
     private double calculateExpiryProgress(LocalDateTime produceDate, LocalDateTime expiryDate) {

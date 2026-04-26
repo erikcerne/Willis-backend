@@ -13,7 +13,7 @@ public class ProductRepository {
         this.repo = repo;
     }
 
-    public Product findById(UUID id){
-        return repo.findById(id).orElseThrow(()-> new NoSuchElementException("artiken hittades inte!"));
+    public Product findById(UUID id) {
+        return repo.findById(id).orElseThrow(() -> new NoSuchElementException("artiken hittades inte!"));
     }
 }
