@@ -28,38 +28,8 @@ public class Controller {
         this.userService = userService;
     }
 
-    @PostMapping()
-    public ResponseEntity<Void> addCartToInventory(@RequestBody List<ReceiveInventoryDto> dto) {
-        inventoryService.addCart(dto);
-        return null;
-    }
-
-    @GetMapping("/all/{id}")
-    public ResponseEntity<List<InventoryDto>> getAllForUserId(@PathVariable String id){
-        List<InventoryDto> inventoryDtos = inventoryService.findAllForUserId(id);
-        return ResponseEntity.ok(inventoryDtos);
-    }
-
-    @DeleteMapping("/deleteAll/{userId}")
-    public ResponseEntity<Void> deleteAllGoneBadItems(@PathVariable String userId){
-        inventoryService.deleteGoneBadItems(userId);
-        return ResponseEntity.noContent().build();
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteInventoryById(@PathVariable UUID id){
-        inventoryService.deleteInventory(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Inventory> updateQuantityById(@PathVariable UUID id, @RequestBody QuantityRequest request){
-        Inventory inventory = inventoryService.updateQuantity(id, request.quantity());
-        return ResponseEntity.accepted().body(inventory);
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<User> register(@AuthenticationPrincipal Jwt jwt) {
+    @PostMapping("/users/register")
+    public ResponseEntity<User> registerUser(@AuthenticationPrincipal Jwt jwt) {
         System.out.println("DEBUG - Alla claims: " + jwt.getClaims());
         String auth0Id = jwt.getSubject();
         String email = jwt.getClaimAsString("https://willis-api/email");
@@ -69,5 +39,40 @@ public class Controller {
         System.out.println("DEBUG - Hittad email: " + email);
         return ResponseEntity.ok(userService.registerIfNew(auth0Id, email));
     }
+
+    @PostMapping("/inventory")
+    public ResponseEntity<Void> syncCartToInventory(@RequestBody List<ReceiveInventoryDto> dto) {
+        inventoryService.addCart(dto);
+        return null;
+    }
+
+    @GetMapping("/inventory")
+    public ResponseEntity<List<InventoryDto>> getUserInventory(String id){
+        List<InventoryDto> inventoryDto = inventoryService.findAllForUserId(id);
+        return ResponseEntity.ok(inventoryDto);
+    }
+
+    @PutMapping("/inventory/{id}")
+    public ResponseEntity<Inventory> updateItemQuantity(@PathVariable UUID id, @RequestBody QuantityRequest request){
+        Inventory inventory = inventoryService.updateQuantity(id, request.quantity());
+        return ResponseEntity.accepted().body(inventory);
+    }
+
+
+    @DeleteMapping("/inventory/{id}")
+    public ResponseEntity<Void> deleteInventoryItem(@PathVariable UUID id){
+        inventoryService.deleteInventory(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/inventory/expired")
+    public ResponseEntity<Void> clearExpiredItems(String userId){
+        inventoryService.deleteGoneBadItems(userId);
+        return ResponseEntity.noContent().build();
+    }
+
+
+
+
 
 }
