@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface JpaInventoryRepository extends JpaRepository<Inventory, UUID>  {
-    List<Inventory> findAllByUser_UserId(UUID userId);
+    List<Inventory> findAllByUser_UserId(String userId);
 }

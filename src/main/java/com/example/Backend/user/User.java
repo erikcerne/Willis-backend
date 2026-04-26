@@ -16,12 +16,12 @@ import java.util.UUID;
 @AllArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id")
-    private UUID userId;
+    private String userId;
 
-    private String name;
+    private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Inventory> inventories;
+
 }

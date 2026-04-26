@@ -44,7 +44,7 @@ public class InventoryService {
 
     private List<Inventory> checkIfExistingInDb(List<Inventory> data) {
 
-        UUID userId = data.get(0).getUser().getUserId();
+        String userId = data.get(0).getUser().getUserId();
 
         List<Inventory> existingData = inventoryRepo.getALlInventoryByUserId(userId);
 
@@ -78,8 +78,8 @@ public class InventoryService {
         inventoryRepo.save(inventory);
     }
 
-    public User findUserByID(UUID id) {
-        return userRepo.getUserById(id);
+    public User findUserByID(String id) {
+        return userRepo.findById(id);
     }
 
     public Product findProductById(UUID id) {
@@ -88,7 +88,7 @@ public class InventoryService {
 
     //get
 
-    public List<InventoryDto> findAllForUserId(UUID id) {
+    public List<InventoryDto> findAllForUserId(String id) {
 
         List<Inventory> inventoriesForUser = inventoryRepo.getALlInventoryByUserId(id);
         List<InventoryDto> inventoryDos = new ArrayList<>();
@@ -153,7 +153,7 @@ public class InventoryService {
     }
 
     //delete
-    public void deleteGoneBadItems(UUID userId) {
+    public void deleteGoneBadItems(String userId) {
         List<Inventory> inventoriesForUser = inventoryRepo.getALlInventoryByUserId(userId);
         List<UUID> idsToDelete = inventoriesForUser.stream()
                 .filter(inventory -> calculateDaysLeft(inventory.getExpiryDate()) == 0)

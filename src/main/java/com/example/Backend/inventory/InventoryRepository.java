@@ -16,7 +16,7 @@ public class InventoryRepository {
     }
 
 
-    public List<Inventory> getALlInventoryByUserId(UUID id){
+    public List<Inventory> getALlInventoryByUserId(String id){
         return repo.findAllByUser_UserId(id);
     }
 
