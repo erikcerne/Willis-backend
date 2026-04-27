@@ -18,7 +18,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "product_id")
     private UUID productId;
-
     private String name;
     private String category;
     private URL pic;

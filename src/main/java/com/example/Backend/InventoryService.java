@@ -3,6 +3,7 @@ package com.example.Backend;
 import com.example.Backend.dtos.InventoryDto;
 import com.example.Backend.dtos.InventoryListDto;
 import com.example.Backend.dtos.ReceiveInventoryDto;
+import com.example.Backend.dtos.ShoppingListDto;
 import com.example.Backend.inventory.Inventory;
 import com.example.Backend.inventory.InventoryRepository;
 import com.example.Backend.products.Product;
@@ -199,7 +200,11 @@ public class InventoryService {
         shoppingListRepo.deleteById(id);
     }
 
-    public List<ShoppingList> getALlShoppingListByUserId(String id){
-        return shoppingListRepo.getALlShoppingListByUserId(id);
+    public List<ShoppingListDto> getALlShoppingListDtoByUserId(String id){
+        return shoppingListRepo.getALlShoppingListByUserId(id).stream()
+                .map(i -> new ShoppingListDto(
+                        i.getProduct().getName(),
+                        i.getProduct().getCategory(),
+                        i.getId())).toList();
     }
 }

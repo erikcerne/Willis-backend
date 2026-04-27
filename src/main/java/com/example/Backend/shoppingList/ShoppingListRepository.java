@@ -14,7 +14,9 @@ public class ShoppingListRepository {
     }
 
     public void save(ShoppingList shoppingList) {
-        jpa.save(shoppingList);
+        if(jpa.findByProduct_ProductId(shoppingList.getProduct().getProductId()) == null){
+            jpa.save(shoppingList);
+        }
     }
 
     public void deleteById(UUID id) {
