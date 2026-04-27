@@ -1,7 +1,7 @@
 package com.example.Backend.inventory;
 
 import com.example.Backend.products.Product;
-import com.example.Backend.user.User; // Notera: User istället för Users
+import com.example.Backend.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
