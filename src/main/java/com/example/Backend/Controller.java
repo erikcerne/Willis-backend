@@ -4,6 +4,7 @@ import com.example.Backend.dtos.InventoryDto;
 import com.example.Backend.dtos.QuantityRequest;
 import com.example.Backend.dtos.ReceiveInventoryDto;
 import com.example.Backend.inventory.Inventory;
+import com.example.Backend.shoppingList.ShoppingList;
 import com.example.Backend.user.User;
 import com.example.Backend.user.UserService;
 import org.springframework.http.ResponseEntity;
@@ -79,6 +80,12 @@ public class Controller {
     public ResponseEntity<Void> deleteShoppingList(@PathVariable UUID id) {
         inventoryService.deleteShoppingList(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/shopping")
+    public ResponseEntity<List<ShoppingList>> getUserShoppingList(String id){
+        List<ShoppingList> shoppingLists = inventoryService.getALlShoppingListByUserId(id);
+        return ResponseEntity.ok(shoppingLists);
     }
 
 

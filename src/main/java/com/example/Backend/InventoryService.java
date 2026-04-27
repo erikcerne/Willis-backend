@@ -197,4 +197,8 @@ public class InventoryService {
     public void deleteShoppingList(UUID id) {
         shoppingListRepo.deleteById(id);
     }
+
+    public List<ShoppingList> getALlShoppingListByUserId(String id){
+        return shoppingListRepo.getALlShoppingListByUserId(id);
+    }
 }
