@@ -187,9 +187,10 @@ public class InventoryService {
 
     //ShoppingList
 
-    public void saveShoppingList(UUID productId, String userId) {
+    public void saveToShoppingList(UUID inventoryId, String userId) {
         User user = userRepo.findById(userId);
-        Product product = productRepo.findById(productId);
+        Inventory inventory = inventoryRepo.findById(inventoryId);
+        Product product = inventory.getProduct();
         ShoppingList shoppingList = new ShoppingList(null, product, user);
         shoppingListRepo.save(shoppingList);
     }

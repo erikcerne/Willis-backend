@@ -71,8 +71,8 @@ public class Controller {
     }
 
     @PostMapping("/shopping")
-    public ResponseEntity<Void> syncCartToInventory(UUID productId, String userId) {
-        inventoryService.saveShoppingList(productId, userId);
+    public ResponseEntity<Void> syncCartToInventory(UUID inventoryId, String userId) {
+        inventoryService.saveToShoppingList(inventoryId, userId);
         return null;
     }
 
