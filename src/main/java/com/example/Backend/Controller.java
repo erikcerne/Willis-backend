@@ -41,7 +41,7 @@ public class Controller {
     @PostMapping("/inventory")
     public ResponseEntity<Void> syncCartToInventory(@RequestBody List<ReceiveInventoryDto> dto) {
         inventoryService.addCart(dto);
-        return null;
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/inventory")
@@ -52,8 +52,8 @@ public class Controller {
     }
 
     @PutMapping("/inventory/{id}")
-    public ResponseEntity<Inventory> updateItemQuantity(@PathVariable UUID inventoryId, @RequestBody int quantity) {
-        Inventory inventory = inventoryService.updateQuantity(inventoryId, quantity);
+    public ResponseEntity<Inventory> updateItemQuantity(@PathVariable UUID id, @RequestBody int quantity) {
+        Inventory inventory = inventoryService.updateQuantity(id, quantity);
         return ResponseEntity.accepted().body(inventory);
     }
 
@@ -72,10 +72,10 @@ public class Controller {
     }
 
     @PostMapping("/shopping")
-    public ResponseEntity<Void> syncCartToInventory(@AuthenticationPrincipal Jwt jwt, UUID inventoryId) {
+    public ResponseEntity<Void> syncCartToInventory(@AuthenticationPrincipal Jwt jwt,@RequestParam UUID inventoryId) {
         String auth0Id = jwt.getSubject();
         inventoryService.saveToShoppingList(inventoryId, auth0Id);
-        return null;
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/shopping")

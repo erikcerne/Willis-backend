@@ -176,8 +176,10 @@ public class InventoryService {
     @Transactional
     public Inventory updateQuantity(UUID inventoryId, int quantity) {
         Inventory inventory = inventoryRepo.findById(inventoryId);
-        int newAmount = inventory.getQuantity() - quantity;
-        inventory.setQuantity(newAmount);
+        if(inventory.getQuantity()<quantity){
+            throw new RuntimeException(); //Error
+        }
+        inventory.setQuantity(quantity);
         inventoryRepo.save(inventory);
         return inventory;
     }
