@@ -72,20 +72,20 @@ public class Controller {
     }
 
     @PostMapping("/shopping")
-    public ResponseEntity<Void> syncCartToInventory(@AuthenticationPrincipal Jwt jwt,@RequestParam UUID inventoryId) {
+    public ResponseEntity<Void> syncCartToInventory(@AuthenticationPrincipal Jwt jwt, @RequestParam UUID inventoryId) {
         String auth0Id = jwt.getSubject();
         inventoryService.saveToShoppingList(inventoryId, auth0Id);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/shopping")
-    public ResponseEntity<Void> deleteShoppingList(UUID id) {
+    public ResponseEntity<Void> deleteShoppingList(@RequestParam UUID id) {
         inventoryService.deleteShoppingList(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/shopping")
-    public ResponseEntity<List<ShoppingListDto>> getUserShoppingList(@AuthenticationPrincipal Jwt jwt){
+    public ResponseEntity<List<ShoppingListDto>> getUserShoppingList(@AuthenticationPrincipal Jwt jwt) {
         String auth0Id = jwt.getSubject();
         List<ShoppingListDto> shoppingListDto = inventoryService.getALlShoppingListDtoByUserId(auth0Id);
         return ResponseEntity.ok(shoppingListDto);
