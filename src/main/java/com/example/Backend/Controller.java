@@ -1,12 +1,10 @@
 package com.example.Backend;
 
 import com.example.Backend.dtos.InventoryDto;
-import com.example.Backend.dtos.QuantityRequest;
 import com.example.Backend.dtos.ReceiveInventoryDto;
 import com.example.Backend.dtos.ShoppingListDto;
 import com.example.Backend.inventory.Inventory;
-import com.example.Backend.products.Product;
-import com.example.Backend.shoppingList.ShoppingList;
+
 import com.example.Backend.user.User;
 import com.example.Backend.user.UserService;
 import org.springframework.http.ResponseEntity;
@@ -54,8 +52,8 @@ public class Controller {
     }
 
     @PutMapping("/inventory/{id}")
-    public ResponseEntity<Inventory> updateItemQuantity(@PathVariable UUID id, @RequestBody QuantityRequest request) {
-        Inventory inventory = inventoryService.updateQuantity(id, request.quantity());
+    public ResponseEntity<Inventory> updateItemQuantity(@PathVariable UUID inventoryId, @RequestBody int quantity) {
+        Inventory inventory = inventoryService.updateQuantity(inventoryId, quantity);
         return ResponseEntity.accepted().body(inventory);
     }
 
@@ -67,28 +65,30 @@ public class Controller {
     }
 
     @DeleteMapping("/inventory/expired")
-    public ResponseEntity<Void> clearExpiredItems(String userId) {
-        inventoryService.deleteGoneBadItems(userId);
+    public ResponseEntity<Void> clearExpiredItems(@AuthenticationPrincipal Jwt jwt) {
+        String auth0Id = jwt.getSubject();
+        inventoryService.deleteGoneBadItems(auth0Id);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/shopping")
-    public ResponseEntity<Void> syncCartToInventory(UUID inventoryId, String userId) {
-        inventoryService.saveToShoppingList(inventoryId, userId);
+    public ResponseEntity<Void> syncCartToInventory(@AuthenticationPrincipal Jwt jwt, UUID inventoryId) {
+        String auth0Id = jwt.getSubject();
+        inventoryService.saveToShoppingList(inventoryId, auth0Id);
         return null;
     }
 
-    @DeleteMapping("/shopping/{id}")
-    public ResponseEntity<Void> deleteShoppingList(@PathVariable UUID id) {
+    @DeleteMapping("/shopping")
+    public ResponseEntity<Void> deleteShoppingList(UUID id) {
         inventoryService.deleteShoppingList(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/shopping")
-    public ResponseEntity<List<ShoppingListDto>> getUserShoppingList(String id){
-        List<ShoppingListDto> shoppingListDto = inventoryService.getALlShoppingListDtoByUserId(id);
+    public ResponseEntity<List<ShoppingListDto>> getUserShoppingList(@AuthenticationPrincipal Jwt jwt){
+        String auth0Id = jwt.getSubject();
+        List<ShoppingListDto> shoppingListDto = inventoryService.getALlShoppingListDtoByUserId(auth0Id);
         return ResponseEntity.ok(shoppingListDto);
     }
-
 
 }

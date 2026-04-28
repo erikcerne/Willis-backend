@@ -174,8 +174,8 @@ public class InventoryService {
 
     //Consumed
     @Transactional
-    public Inventory updateQuantity(UUID id, int quantity) {
-        Inventory inventory = inventoryRepo.findById(id);
+    public Inventory updateQuantity(UUID inventoryId, int quantity) {
+        Inventory inventory = inventoryRepo.findById(inventoryId);
         int newAmount = inventory.getQuantity() - quantity;
         inventory.setQuantity(newAmount);
         inventoryRepo.save(inventory);
