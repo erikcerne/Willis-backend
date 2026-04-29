@@ -8,6 +8,5 @@ import java.util.UUID;
 public interface JpaShoppingListRepository extends JpaRepository<ShoppingList, UUID> {
     List<ShoppingList> findAllByUser_UserId(String userId);
 
-    ShoppingList findByProduct_ProductId(UUID productId);
-
+    ShoppingList findByProduct_ProductIdAndUser_UserId(UUID productId, String userId);
 }

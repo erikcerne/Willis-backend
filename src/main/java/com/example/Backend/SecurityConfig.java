@@ -26,6 +26,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/register").authenticated()
                         .requestMatchers("/api/inventory/**").authenticated()
                         .requestMatchers("/api/inventory").authenticated()
+                        .requestMatchers("/api/shopping").authenticated()
                         .anyRequest().permitAll()
                 )
                 .oauth2ResourceServer(oauth -> oauth

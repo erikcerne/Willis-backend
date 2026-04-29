@@ -1,5 +1,4 @@
 package com.example.Backend.shoppingList;
-import com.example.Backend.inventory.Inventory;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,7 +13,11 @@ public class ShoppingListRepository {
     }
 
     public void save(ShoppingList shoppingList) {
-        if(jpa.findByProduct_ProductId(shoppingList.getProduct().getProductId()) == null){
+        // Kontrollera nu både productId och userId
+        UUID productId = shoppingList.getProduct().getProductId();
+        String userId = shoppingList.getUser().getUserId();
+
+        if(jpa.findByProduct_ProductIdAndUser_UserId(productId, userId) == null){
             jpa.save(shoppingList);
         }
     }
@@ -26,5 +29,4 @@ public class ShoppingListRepository {
     public List<ShoppingList> getALlShoppingListByUserId(String id) {
         return jpa.findAllByUser_UserId(id);
     }
-
 }
