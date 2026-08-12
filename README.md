@@ -1,3 +1,4 @@
+
 # Willis Backend API
 
 ## Länkar
@@ -10,6 +11,8 @@ Backend-API för en full-stack applikation som automatiserar hantering av matvar
 Kärnidén är att applikationen kan ta emot extern JSON-data som simulerar ett köp från en matbutiks kassa. Datat innehåller produkt-id, kvantitet, produktionsdatum och utgångsdatum. Backend lagrar eller uppdaterar sedan automatiskt användarens digitala skafferi utan att användaren manuellt behöver registrera varje vara.
 
 För matbutiker och större livsmedelsaktörer skapar detta en tydlig integrationspunkt: kassasystem, e-handel eller framtida 2D/QR-koder kan skicka strukturerad produktdata direkt till användarens konto. Automatiseringen minskar friktion, gör bäst-före-data användbar i realtid och skapar bättre förutsättningar för smarta påminnelser, planering och minskat matsvinn.
+
+<img width="1024" height="558" alt="7b0aa8a1-3290-4092-a52b-12b8d99687ca" src="https://github.com/user-attachments/assets/96afd39b-fdc7-48f4-bfac-8c9c0a29889d" />
 
 ## Innehåll
 
