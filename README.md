@@ -481,6 +481,3 @@ src/main/java/com/example/Backend
 |   |-- JpaUserRepository.java
 ```
 
-## Sammanfattning
-
-Willis Backend API är ett Spring Boot-baserat REST API för automatiserad matvaruhantering. Genom att kombinera Auth0-säkrad användaridentitet, Supabase/PostgreSQL och JSON ingest från externa köpflöden kan applikationen automatiskt bygga upp ett digitalt skafferi, hålla koll på bäst-före-datum och hjälpa användare att minska matsvinn.
