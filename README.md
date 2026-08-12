@@ -1,5 +1,10 @@
 # Willis Backend API
 
+## Länkar
+
+- 🌐 **Live Demo (Frontend):** [Testa applikationen här](https://willis-frontend-production.up.railway.app/)
+- 🔗 **Frontend Repo:** [Se koden för gränssnittet här](https://github.com/erikcerne/willis-frontend)
+
 Backend-API för en full-stack applikation som automatiserar hantering av matvaror och hjälper hushåll att minska matsvinn. API:et fungerar som lagret mellan en frontend, Auth0-inloggning och en PostgreSQL-databas i Supabase.
 
 Kärnidén är att applikationen kan ta emot extern JSON-data som simulerar ett köp från en matbutiks kassa. Datat innehåller produkt-id, kvantitet, produktionsdatum och utgångsdatum. Backend lagrar eller uppdaterar sedan automatiskt användarens digitala skafferi utan att användaren manuellt behöver registrera varje vara.
@@ -359,7 +364,7 @@ export DB_PASS="<database-password>"
 Rekommenderade Auth0-variabler för Railway eller framtida extern konfiguration:
 
 ```text
-AUTH0_ISSUER_URI=https://<tenant>.<region>.auth0.com/
+AUTH0_DOMAIN=<tenant>.<region>.auth0.com
 AUTH0_AUDIENCE=https://willis-api/
 ```
 
@@ -412,9 +417,11 @@ Typisk Railway-konfiguration:
 
 | Variabel | Beskrivning |
 | --- | --- |
+| `DB_PASS` | Databaslösenord |
 | `DB_URL` | JDBC-URL till Supabase PostgreSQL |
 | `DB_USER` | Databasanvändare |
-| `DB_PASS` | Databaslösenord |
+| `AUTH0_AUDIENCE` | Auth0 API audience, exempelvis `https://willis-api/` |
+| `AUTH0_DOMAIN` | Auth0-domän, exempelvis `<tenant>.<region>.auth0.com` |
 | `PORT` | Sätts av Railway. Spring Boot kan använda den om serverport konfigureras. |
 
 För produktion bör hemligheter lagras som Railway Variables, inte i versionshanterade filer.
