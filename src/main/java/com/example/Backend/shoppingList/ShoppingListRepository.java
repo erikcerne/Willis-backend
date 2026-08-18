@@ -13,7 +13,6 @@ public class ShoppingListRepository {
     }
 
     public void save(ShoppingList shoppingList) {
-        // Kontrollera nu både productId och userId
         UUID productId = shoppingList.getProduct().getProductId();
         String userId = shoppingList.getUser().getUserId();
 
