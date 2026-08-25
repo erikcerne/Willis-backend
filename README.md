@@ -2,7 +2,7 @@
 
 > **Track. Organize. Reduce Waste.** The most expensive food is the food you throw away. Willis-pantry is a full-stack pantry management application designed to automate grocery tracking, monitor expiration dates, and reduce household food waste without manual scanning.
 
-**🌍 Live Demo:** [https://willis-frontend-production.up.railway.app/](https://willis-frontend-production.up.railway.app/)
+**🌍 Live Demo:** [https://willis-frontend.vercel.app/](https://willis-frontend.vercel.app/)
 
 🔗 **Frontend Repo:** [https://github.com/erikcerne/willis-frontend](https://github.com/erikcerne/willis-frontend)
 
